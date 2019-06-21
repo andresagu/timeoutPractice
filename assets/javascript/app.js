@@ -17,6 +17,11 @@ var blankCount = 0;
 //$('.carousel').carousel('cycle');
 
 
+//ON THE INITIAL RUN THIS RENDERS ALL CHECKBOXES INACTIVE AND SETS THE PRESELECTED LABELS TO false
+$("input:radio").prop('checked', false);
+$("input:radio").closest("label").removeClass("active");
+
+
 // Going to use this timeout function to control the carousel to make all updates in one swooop
 // NOTE the carousel can be controled with it's own Jquery methods but it might make triggering events a bit more complicated
 // than simply using a timout function
@@ -25,13 +30,14 @@ var blankCount = 0;
 setInterval(function(){
 
   //reads input at set interval
-
   var input = $( "input:checked" ).val();
   console.log( input + " is checked!");
 
-  $(":radio").prop('checked', false);
+  //This will ensure to reset the checked property for any checked answers so it doesn't affect future answers
+  //THIS SHOULD RUN BEFORE EACH SLIDE CHANGE TO ENSURE NO ERRORS IN ANSWER READ SHOW UP (UNSURE WHY ATM)
+  $("input:radio").prop('checked', false);
+  $("input:radio").closest("label").removeClass("active");
 
-  //$('.btn-group').find('label').removeClass('active').end().find('[type="radio"]').prop('checked', false);
 
   $('.carousel').carousel('next');
 
@@ -48,7 +54,12 @@ setInterval(function(){
 
 
 
-var nextSlide = function(){
+var timeUp = function(){
+
+  var input = $( "input:checked" ).val();
+  console.log( input + " is checked!");
+
+
 
 }
 
