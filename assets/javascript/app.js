@@ -1,9 +1,4 @@
 
-//Sets the interval to time the carousel;
-// $('.carousel').carousel({
-//   interval: 3000
-// });
-
 //Stores array of correct answers
 var answers = [4,3,4,1,2];
 
@@ -14,7 +9,9 @@ var blankCount = 0;
 
 //VARS TO KEEP TRACK OF THE carousel
 var totalItems = $('.carousel-item').length;
-var currentIndex;
+var currentIndex = $('div.active').index();
+
+var gameOver = false;
 
 console.log(totalItems);
 //Starts cycling the carousel
@@ -31,8 +28,11 @@ $("input:radio").closest("label").removeClass("active");
 // than simply using a timout function
 //This will alert every 10 seconds
 //switching pages on the carousel and determining whether there was a win or loss
-setInterval(function(){
 
+var timesRun = 0;
+setInterval(function(){
+console.log(currentIndex);
+if(currentIndex+1 < totalItems){
   //reads input at set interval
   timeUp();
 
@@ -41,8 +41,13 @@ setInterval(function(){
   $("input:radio").prop('checked', false);
   $("input:radio").closest("label").removeClass("active");
 
-  if(currentIndex+1 < totalItems){
+
   $('.carousel').carousel('next');
+}
+else if(currentIndex+1 == totalItems){
+  $(".carousel").carousel('pause');
+  console.log("correct= "+correctCount);
+  console.log("incorrect= "+incorrectCount);
 }
 
  }, 10000);
@@ -59,21 +64,15 @@ var timeUp = function(){
 
   currentIndex = $('div.active').index();
 
-  console.log(currentIndex);
 
   if(input==answers[currentIndex]){
     correctCount++;
     console.log("correct");
   }
-  else{
+  else if(input != answers[currentIndex]){
     incorrectCount++;
     console.log("incorrect");
   }
-
-  if(currentIndex+1 == totalItems){
-    $(".carousel").carousel('pause');
-  }
-
 
 }
 
