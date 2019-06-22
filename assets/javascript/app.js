@@ -12,7 +12,11 @@ var correctCount = 0;
 var incorrectCount = 0;
 var blankCount = 0;
 
+//VARS TO KEEP TRACK OF THE carousel
+var totalItems = $('.carousel-item').length;
+var currentIndex;
 
+console.log(totalItems);
 //Starts cycling the carousel
 //$('.carousel').carousel('cycle');
 
@@ -30,23 +34,16 @@ $("input:radio").closest("label").removeClass("active");
 setInterval(function(){
 
   //reads input at set interval
-  var input = $( "input:checked" ).val();
-  console.log( input + " is checked!");
+  timeUp();
 
   //This will ensure to reset the checked property for any checked answers so it doesn't affect future answers
   //THIS SHOULD RUN BEFORE EACH SLIDE CHANGE TO ENSURE NO ERRORS IN ANSWER READ SHOW UP (UNSURE WHY ATM)
   $("input:radio").prop('checked', false);
   $("input:radio").closest("label").removeClass("active");
 
-
+  if(currentIndex+1 < totalItems){
   $('.carousel').carousel('next');
-
-
-
-
-
-
-
+}
 
  }, 10000);
 
@@ -57,7 +54,25 @@ setInterval(function(){
 var timeUp = function(){
 
   var input = $( "input:checked" ).val();
+  console.log(input);
 
+
+  currentIndex = $('div.active').index();
+
+  console.log(currentIndex);
+
+  if(input==answers[currentIndex]){
+    correctCount++;
+    console.log("correct");
+  }
+  else{
+    incorrectCount++;
+    console.log("incorrect");
+  }
+
+  if(currentIndex+1 == totalItems){
+    $(".carousel").carousel('pause');
+  }
 
 
 }
