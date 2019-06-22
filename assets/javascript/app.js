@@ -5,7 +5,7 @@
 // });
 
 //Stores array of correct answers
-var answers = [];
+var answers = [4,3,4,1,2];
 
 //global vars to count the game stats
 var correctCount = 0;
@@ -57,7 +57,6 @@ setInterval(function(){
 var timeUp = function(){
 
   var input = $( "input:checked" ).val();
-  console.log( input + " is checked!");
 
 
 
